@@ -1,27 +1,28 @@
 'use strict';
 
-let scores, roundScore, activePlayer, gamePlaying;
+let scores, roundScore, activePlayer, gamePlaying, lastDice;
 
 init();
 
 document.querySelector('.btn--roll').addEventListener('click', () => {
   if (gamePlaying) {
     // random number
-    const dice = Math.floor(Math.random() * 6) + 1;
+    const dice1 = Math.floor(Math.random() * 6) + 1;
+    const dice2 = Math.floor(Math.random() * 6) + 1;
 
     // display the result
-    const diceDOM = document.querySelector('.dice');
-    diceDOM.style.display = 'block';
-    diceDOM.src = 'dice-' + dice + '.png';
+    document.getElementById('dice-1').style.display = 'block';
+    document.getElementById('dice-2').style.display = 'block';
+   
+    document.getElementById('dice-1').src = 'dice-' + dice1 + '.png';
+    document.getElementById('dice-2').src = 'dice-' + dice2 + '.png';
 
-    // update the round score if the rolled number was not a 1
-    if (dice !== 1) {
-
+    if (dice1 !== 1 && dice2 !== 1) {
       // add score
-      roundScore += dice;
+      roundScore += dice1 + dice2;
       document.querySelector('#current--' + activePlayer).textContent = roundScore;
     } else {
-      nextPlayer();
+      nextPlayer()
     }
   }
 });
@@ -36,10 +37,20 @@ document.querySelector('.btn--hold').addEventListener('click', () => {
     document.querySelector('#score--' + activePlayer).textContent =
       scores[activePlayer];
 
+    let input = document.querySelector('.final-score').value;
+    let winningScore;
+    // check if underfined, 0, null or '' are coerced to false
+    if(input) {
+      winningScore = input
+    } else {
+      winningScore = 100
+    }
+
     // Check if player won a game
-    if (scores[activePlayer] >= 100) {
+    if (scores[activePlayer] >= winningScore) {
       document.querySelector('#name--' + activePlayer).textContent = 'Winner!';
-      document.querySelector('.dice').style.display = 'none';
+       document.getElementById('dice-1').style.display = 'none';
+       document.getElementById('dice-2').style.display = 'none';
       document .querySelector('.player--' + activePlayer).classList.add('winner');
       document.querySelector('.player--' + activePlayer).classList.remove('player--active');
       gamePlaying = false;
@@ -61,7 +72,8 @@ function nextPlayer() {
   document.getElementById('current--1').textContent = '0';
   document.querySelector('.player--0').classList.toggle('player--active');
   document.querySelector('.player--1').classList.toggle('player--active');
-  document.querySelector('.dice').style.display = 'none';
+  document.getElementById('dice-1').style.display = 'none';
+  document.getElementById('dice-2').style.display = 'none';
 }
 document.querySelector('.btn--new').addEventListener('click', init);
 
@@ -71,7 +83,8 @@ function init() {
   activePlayer = 0;
   gamePlaying = true;
 
-  document.querySelector('.dice').style.display = 'none';
+  document.getElementById('dice-1').style.display = 'none';
+  document.getElementById('dice-2').style.display = 'none';
   document.getElementById('score--0').textContent = '0';
   document.getElementById('score--1').textContent = '0';
   document.getElementById('current--0').textContent = '0';

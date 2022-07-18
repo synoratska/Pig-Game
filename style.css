@@ -1,5 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
+.final-score {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 528px;
+  color: #fffdfd !important;
+  font-size: 18px;
+  font-family: 'Lato';
+  text-align: center;
+  padding: 10px;
+  width: 160px;
+  text-transform: uppercase;
+  border: none;
+  background-color: #a4a4bb;
+}
+
+.final-score:focus {
+  outline: none;
+}
+
+#dice-1 {
+  top: 196px;
+  left: 422px;
+}
+
+#dice-2 {
+  top: 196px;
+  left: 578px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -53,7 +83,7 @@ main {
   letter-spacing: 1px;
   word-spacing: 2px;
   font-weight: 300;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
 }
 
 .score {
